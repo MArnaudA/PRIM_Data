@@ -1,0 +1,15 @@
+models:
+  - name: stg_lines
+    config:
+      materialized: incremental
+      unique_key: ['response_timestamp', 'dated_vehicle_journey_ref', 'call_stop_point_ref']
+      incremental_strategy: merge
+
+      bigquery_options:
+        partition_by:
+          field: response_timestamp
+          data_type: timestamp
+          granularity: DAY
+        
+        partition_expiration_days: 180
+        
