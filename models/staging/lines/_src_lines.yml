@@ -1,0 +1,11 @@
+sources:
+  - name: lines
+    description: data about railway lines in Paris (RER A to RER E)
+    database: primdata
+    schema: donnees_ligne_raw
+    config:
+      loaded_at_field: ResponseTimestamp
+    
+    tables:
+      - name: api_data_table
+        description: Parsed real-time lines data from PRIM API "Prochains passages - Requête ligne"
