@@ -1,5 +1,10 @@
-with lines as (
+with source as (
+    select * from {{source( 'lines', 'api_data_table')}}
+),
+
+lines as (
     select 
+        {{ dbt_utils.generate_surrogate_key(['ResponseTimestamp', 'DatedVehicleJourneyRef', 'Call_stopPointRef']) }} AS surrogate_key,
         ProducerRef                 as producer_ref,
         ResponseTimestamp           as response_timestamp,
         Journey_RecordedAtTime      as journey_recorded_at_time,
@@ -25,7 +30,7 @@ with lines as (
         Call_ExpectedArrivalTime    as call_expected_arrival_time,
         Call_AimedDepartureTime     as call_aimed_departure_time,
         Call_AimedArrivalTime       as call_aimed_arrival_time
-    from {{ source('lines', 'api_data_table') }}
+    from source
 )
 
 select * from lines
