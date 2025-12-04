@@ -1,0 +1,11 @@
+sources:
+  - name: line_references
+    description: data about railway line lists in Paris (all lines that are available in realtime)
+    database: primdata
+    schema: donnees_ligne_raw
+    config:
+      loaded_at_field: ResponseTimestamp
+    
+    tables:
+      - name: arrets
+        description: list of lines available in real-time API
