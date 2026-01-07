@@ -29,13 +29,17 @@ lines as (
         Call_ExpectedDepartureTime  as call_expected_departure_time,
         Call_ExpectedArrivalTime    as call_expected_arrival_time,
         Call_AimedDepartureTime     as call_aimed_departure_time,
-        Call_AimedArrivalTime       as call_aimed_arrival_time
+        Call_AimedArrivalTime       as call_aimed_arrival_time,
+        row_number() over(
+            partition by ResponseTimestamp, DatedVehicleJourneyRef, Call_stopPointRef, Call_AimedDepartureTime
+            order by ResponseTimestamp
+            )                       as row_number
     from source
 )
 
 select * from lines
-
+where row_number = 1
 {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-    where response_timestamp > (select max(response_timestamp) from {{ this }}) 
+    and response_timestamp > (select max(response_timestamp) from {{ this }}) 
 {% endif %}

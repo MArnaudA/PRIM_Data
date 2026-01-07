@@ -3,6 +3,7 @@ models:
     columns:
       - name: surrogate_key
         tests:
+          - unique
           - not_null
       
       - name: published_line_name
@@ -19,7 +20,7 @@ models:
         
     config:
       materialized: incremental
-      unique_key: ['response_timestamp', 'dated_vehicle_journey_ref', 'call_stop_point_ref']
+      unique_key: ['response_timestamp', 'dated_vehicle_journey_ref', 'call_stop_point_ref', call_aimed_departure_time]
       incremental_strategy: merge
 
       bigquery_options:
