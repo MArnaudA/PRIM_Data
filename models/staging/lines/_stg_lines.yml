@@ -1,5 +1,22 @@
 models:
   - name: stg_lines
+    columns:
+      - name: surrogate_key
+        tests:
+          - not_null
+      
+      - name: published_line_name
+        tests:
+          - accepted_values:
+              arguments:
+                values: ["A", "B", "C", "D", "E"]
+      
+      - name: direction_ref
+        tests:
+          - accepted_values:
+              arguments:
+                values: ["Aller", "Retour"]
+        
     config:
       materialized: incremental
       unique_key: ['response_timestamp', 'dated_vehicle_journey_ref', 'call_stop_point_ref']
@@ -12,4 +29,6 @@ models:
           granularity: DAY
         
         partition_expiration_days: 180
+
+    
         
