@@ -4,7 +4,7 @@ with source as (
 
 lines as (
     select 
-        {{ dbt_utils.generate_surrogate_key(['ResponseTimestamp', 'DatedVehicleJourneyRef', 'Call_stopPointRef']) }} AS surrogate_key,
+        {{ dbt_utils.generate_surrogate_key(['ResponseTimestamp', 'DatedVehicleJourneyRef', 'Call_stopPointRef', 'Call_AimedDepartureTime']) }} AS surrogate_key,
         ProducerRef                 as producer_ref,
         ResponseTimestamp           as response_timestamp,
         Journey_RecordedAtTime      as journey_recorded_at_time,
